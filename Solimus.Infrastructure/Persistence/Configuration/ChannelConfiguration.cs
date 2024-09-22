@@ -19,6 +19,7 @@ public class ChannelConfiguration : IEntityTypeConfiguration<Channel>
 
         builder.HasOne(c => c.Source)
             .WithOne(s => s.Channel)
-            .HasForeignKey<Source>(k => k.ChannelId);
+            .HasForeignKey<Source>(k => k.ChannelId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

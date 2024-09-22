@@ -4,7 +4,7 @@ using Solimus.Domain.Entities;
 
 namespace Solimus.Infrastructure.Persistence.Configuration;
 
-public class SoourceConfiguration : IEntityTypeConfiguration<Source>
+public class SourceConfiguration : IEntityTypeConfiguration<Source>
 {
     public void Configure(EntityTypeBuilder<Source> builder)
     {

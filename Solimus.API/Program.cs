@@ -1,6 +1,9 @@
-var builder = WebApplication.CreateBuilder(args);
+using Solimus.Infrastructure;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var dbConnection = builder.Configuration["ConnectionStrings:SqlServerConnection"];
+
+builder.Services.AddInfrastructure(dbConnection!);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

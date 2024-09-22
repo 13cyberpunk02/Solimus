@@ -19,6 +19,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.HasMany(c => c.Channels)
             .WithOne(c => c.Category)
-            .HasForeignKey(k => k.Category);
+            .HasForeignKey(k => k.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

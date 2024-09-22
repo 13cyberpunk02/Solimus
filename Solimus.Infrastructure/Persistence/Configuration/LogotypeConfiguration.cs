@@ -21,6 +21,7 @@ public class LogotypeConfiguration : IEntityTypeConfiguration<Logotype>
 
         builder.HasMany(c => c.Channels)
             .WithOne(l => l.Logotype)
-            .HasForeignKey(k => k.LogotypeId);
+            .HasForeignKey(k => k.LogotypeId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
