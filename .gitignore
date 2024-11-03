@@ -362,3 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Solimus.Infrastructure/Persistence/Migrations
+/Solimus.WebUI/WebUI/public
+/Solimus.WebUI/WebUI/.vscode
+/Solimus.WebUI/.idea
+/.idea/.idea.Solimus/.idea
