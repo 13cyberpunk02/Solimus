@@ -1,0 +1,29 @@
+<div class="flex items-center justify-center min-h-screen bg-slate-700 dark:bg-yellow-600">
+    <div class="bg-slate-800 dark:bg-yellow-500 p-6 rounded-lg shadow-md w-full max-w-sm">
+        <div *ngIf="confirmed">
+            <h2 class="text-2xl font-bold mb-4 text-center text-white dark:text-white">Электронная почта успешно
+                подтверждена. Можете авторизоваться.</h2>
+            <button (click)="login()"
+                class="w-full bg-emerald-700 mt-5 text-white py-2 rounded-lg hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 mb-4">
+                Авторизоваться
+                <fa-icon [icon]="loginIcon"></fa-icon>
+            </button>
+        </div>
+        <div *ngIf="!confirmed">
+            <h2 class="text-2xl font-bold mb-4 text-center text-white dark:text-white">Электронная почта не подтверждена,
+                что-то пошло не так. Возможно срок жизни токена для активации истек. Попробуйте повторно отправить токен для
+                валидцаии вашей почты.</h2>
+            <div class="mb-4">
+                <label for="email" class="text-black dark:text-white">Электронная почта</label>
+                <input id="email" type="email"
+                    class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    placeholder="Введите вашу почту" [(ngModel)]="email" />
+            </div>
+            <button (click)="resendConfirmEmail()"
+                class="w-full bg-emerald-700 mt-5 text-white py-2 rounded-lg hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 mb-4">
+                Авторизоваться
+                <fa-icon [icon]="mailIcon"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>

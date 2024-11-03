@@ -1,0 +1,12 @@
+<div class="rectangle bg-yellow-600 border-gray-700 dark:border-gray-200 dark:bg-slate-700" 
+     (mouseenter)="changeBorderColor()" 
+     (mouseleave)="onMouseLeave()" 
+     [ngClass]="currentBorderColor" 
+     (click)="handleClick()">
+  <div class="h-24 m-10">
+    <img [src]="imageUrl" alt="{{ title }}" class="w-full h-full object-center object-contain text-black dark:text-white">
+  </div>
+  <div class="p-4">
+    <h2 class="text-lg font-semibold text-center">{{ title }}</h2>
+  </div>
+</div>

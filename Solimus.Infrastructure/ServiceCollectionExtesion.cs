@@ -11,7 +11,7 @@ public static class ServiceCollectionExtesion
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string DatabaseConnectionString)
     {
         services.AddDbContext<SolimusContext>(options => options.UseSqlServer(DatabaseConnectionString));
-        services.AddScoped<IUnitOfWork, IUnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IChannelRepository, ChannelRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();

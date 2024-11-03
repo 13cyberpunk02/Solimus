@@ -1,0 +1,11 @@
+<div
+    class="rounded-md bg-transparent text-black dark:text-white ">
+    <div class="text-center">
+        <h1 class="text-2xl font-bold">Категории</h1>
+    </div>    
+    <div class="relative flex items-center mt-5">
+        <div class="flex w-1/6 p-2" *ngFor="let category of categories; let i = index">
+            <app-rectangle [imageUrl]="category.Image" [title]="category.Name"></app-rectangle>
+        </div>
+    </div>
+</div>

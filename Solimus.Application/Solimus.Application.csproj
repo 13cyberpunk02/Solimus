@@ -7,9 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTO`s\" />
-    <Folder Include="Services\" />
-    <Folder Include="Validators\" />
+    <Folder Include="Models\Request\User\Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>

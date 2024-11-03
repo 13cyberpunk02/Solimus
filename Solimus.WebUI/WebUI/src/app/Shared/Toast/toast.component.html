@@ -1,0 +1,9 @@
+<div *ngIf="toast" class="flex fixed top-16 right-4 justify-between max-w-sm w-full p-4 rounded-lg shadow-lg z-50"
+     [ngClass]="getToastType()">
+  <div class="text-white font-semibold">
+    {{ toast.message }}    
+  </div>
+  <div>
+    <fa-icon [icon]="getToastIcon()" class="text-white"></fa-icon>
+  </div>
+</div>

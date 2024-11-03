@@ -1,0 +1,140 @@
+<!-- auth-form.component.html -->
+<div class="min-h-screen flex items-center justify-center bg-yellow-600 dark:bg-slate-700 relative">
+  <img src="eagle.png" alt="Background Image" class="absolute inset-0 w-fit h-fit object-cover opacity-40">
+  <div class="bg-yellow-500 dark:bg-slate-800 p-6 rounded-2xl shadow-2xl w-full max-w-sm relative z-9 form-container">
+    <div class="flex justify-around mb-4">
+      <button (click)="selectTab('login')"
+        [ngClass]="{'border-b-2 border-emerald-700 text-emerald-700': selectedTab === 'login'}"
+        class="tab-button text-black dark:text-white py-2 px-4 focus:outline-none">Авторизация</button>
+      <button (click)="selectTab('register')"
+        [ngClass]="{'border-b-2 border-emerald-700 text-emerald-700': selectedTab === 'register'}"
+        class="tab-button text-black dark:text-white py-2 px-4 focus:outline-none">Регистрация</button>
+    </div>
+    <form *ngIf="selectedTab === 'login'" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="mb-4">
+        <label for="email" class="block text-black dark:text-white">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="Ваша электронная почта"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <div *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched"
+          class="text-red-500 text-sm mt-1">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">
+            <small>Электронная почта не может быть пустым</small>
+          </div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">
+            <small>Нужно правильно указать электронную почту</small>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-black dark:text-white">Пароль</label>
+        <div class="relative">
+          <input [type]="loginPasswordVisible ? 'text' : 'password'" placeholder="Введите ваш пароль"
+            formControlName="loginPassword"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <fa-icon [icon]="loginPasswordVisibleIcon" (click)="toggleLoginPasswordVisibility()"
+            class="absolute inset-y-0 right-0 pr-3 h-full flex items-center"></fa-icon>
+        </div>
+        <div *ngIf="loginForm.get('loginPassword')!.invalid && loginForm.get('loginPassword')!.touched"
+          class="text-red-500 text-sm mt-1">          
+            <small>Пароль не может быть пустым</small>          
+        </div>
+      </div>
+      <div class="flex items-center justify-between mb-4">
+        <label class="flex items-center">
+          <input type="checkbox" class="form-checkbox">
+          <span class="ml-2 text-black checked:outline-teal-500 dark:text-white">Запомнить меня</span>
+        </label>
+        <button class="text-emerald-700 hover:underline" (click)="forgotPassword()">Забыли пароль?</button>
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid"
+        class="w-full bg-emerald-700 text-white py-2 rounded-lg hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 mb-4">Войти</button>
+    </form>
+
+    <form *ngIf="selectedTab === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+      <div class="mb-4">
+        <label for="email" class="block text-black dark:text-white">Электронная почта</label>
+        <input type="email" id="email" formControlName="email" placeholder="Ваша электронная почта"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <div *ngIf="registerForm.get('email')!.invalid && registerForm.get('email')!.touched"
+          class="text-red-500 text-sm mt-1">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">
+            <small>Электронная почта не может быть пустым</small>
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">
+            <small>Нужно правильно указать электронную почту</small>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="user_name" class="block text-black dark:text-white">Имя пользователя</label>
+        <input type="text" id="user_name" formControlName="user_name" autocomplete="off" placeholder="Введите имя пользователя"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <div *ngIf="registerForm.get('user_name')!.invalid && registerForm.get('user_name')!.touched"
+          class="text-red-500 text-sm mt-1">
+          <div *ngIf="registerForm.get('user_name')?.errors?.['required']">
+            Имя пользователя не может быть пустым
+          </div>
+          <div *ngIf="registerForm.get('user_name')?.errors?.['maxlength']">
+            <small>Максимальное количество букв и символов в имени пользователя не должно превышать 30 знаков</small>
+          </div>
+          <div *ngIf="registerForm.get('user_name')?.errors?.['minlength']">
+            <small>Минимальное количество символов и букв в имени пользователя должно быть не меньше 3 знаков</small>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-black dark:text-white">Пароль</label>
+        <div class="relative">
+          <input [type]="registerPasswordVisible ? 'text' : 'password'" placeholder="Введите пароль" id="password"
+            formControlName="password"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <fa-icon [icon]="registerPasswordVisibleIcon" (click)="toggleRegisterPasswordVisibility()"
+            class="absolute inset-y-0 right-0 pr-3 h-full flex items-center"></fa-icon>
+        </div>
+        <div *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched"
+          class="text-red-500 text-sm mt-1">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">
+            <small>Пароль не может быть пустым</small>
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            <small>Минимальное количество символов в пароле должно быть больше 5 знаков</small>
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['hasUpperCase']">
+            <small>Пароль должен содержать хотя бы одну большую букву</small>
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['hasLowerCase']">
+            <small>Пароль должен содержать хотя бы одну маленькую букву</small>
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['hasNumericChar']">
+            <small>Пароль должен содержать хотя бы одну цифру</small>
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['hasSpecialChar']">
+            <small>Пароль должен содержать хотя бы один символ</small>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="confirmPassword" class="block text-black dark:text-white">Подтверждение пароля</label>
+        <div class="relative">
+          <input [type]="confirmPasswordVisible ? 'text' : 'password'" placeholder="Подтверждение пароля"
+            id="confirmPassword" formControlName="confirmPassword"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <fa-icon [icon]="confirmPasswordVisibleIcon" (click)="toggleConfirmPasswordVisibility()"
+            class="absolute inset-y-0 right-0 pr-3 h-full flex items-center"></fa-icon>
+        </div>
+        <div *ngIf="registerForm.get('confirmPassword')!.invalid && registerForm.get('confirmPassword')!.touched"
+          class="text-red-500 text-sm mt-1">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
+            <small>Не может быть пустым</small>
+          </div>
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['mismatch']">
+            <small>Пароль не совпадает</small>
+          </div>
+        </div>
+      </div>
+      <button type="submit"
+        class="w-full bg-emerald-700 mt-5 text-white py-2 rounded-lg hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 mb-4"
+        [disabled]="registerForm.invalid">Зарегистрироваться</button>
+    </form>
+  </div>
+</div>

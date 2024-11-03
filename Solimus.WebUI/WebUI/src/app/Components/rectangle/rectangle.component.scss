@@ -1,0 +1,25 @@
+.rectangle {
+    cursor: pointer;
+    border: 2px solid transparent; // Начальная рамка прозрачная
+    border-radius: 0.5rem; // Радиус скругления
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s; // Добавьте переход для border-color
+  
+    &:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  
+    &.border-red {
+      border-color: red;
+    }
+  
+    &.border-blue {
+      border-color: blue;
+    }  
+  
+    &.border-yellow {
+      border-color: yellow;
+    }  
+  }
