@@ -1,5 +1,5 @@
 export interface MainSuccessResponse {
-    value: string,
+    value: any,
     isFailure: boolean,
     error: {
         code: string,

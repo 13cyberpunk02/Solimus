@@ -13,7 +13,7 @@ public class SolimusContext(DbContextOptions<SolimusContext> options) : Identity
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(typeof(SolimusContext).Assembly);
-        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(SolimusContext).Assembly);        
+        base.OnModelCreating(builder);        
     }
 }

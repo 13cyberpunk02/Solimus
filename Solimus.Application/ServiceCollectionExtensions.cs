@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<ContextSeedService>();
         return services;
     }
 }

@@ -99,7 +99,7 @@ public class AuthenticationService(
         if (!result.Succeeded)
             return Result.Failure(AuthenticationError.CreateInvalidLoginRequestError(result.Errors.Select(x => x.Description)));
 
-        return Result.Success(new { AccessToken = token, RefreshToken = refreshToken});
+        return Result.Success(new { AccessToken = token, RefreshToken = refreshToken, Email = user.Email});
     }
 
     public async Task<Result> RefreshAccessToken(RefreshTokenRequest request)
@@ -127,7 +127,7 @@ public class AuthenticationService(
 
         if(!result.Succeeded)
             return Result.Failure(AuthenticationError.CreateInvalidLoginRequestError(result.Errors.Select(x => x.Description)));
-        return Result.Success(new { newAccessToken, newRefreshToken });
+        return Result.Success(new { AccessToken = newAccessToken, RefreshToken = newRefreshToken, Email = user.Email });
     }
 
     public async Task<Result> RegistrationAsync(RegistrationRequest registrationRequest)
@@ -145,9 +145,9 @@ public class AuthenticationService(
         {
             Email = registrationRequest.Email,
             UserName = registrationRequest.Username,
-            JoinedDate = DateTime.UtcNow
+            JoinedDate = DateTime.UtcNow            
         };
-
+        
         var result = await userManager.CreateAsync(userToAdd, registrationRequest.Password);
 
         if (!result.Succeeded)

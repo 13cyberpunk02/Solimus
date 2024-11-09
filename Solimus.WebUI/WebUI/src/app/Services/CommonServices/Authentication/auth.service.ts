@@ -2,24 +2,34 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from '../../../Models/Requests/Authentication/register';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { MainErrorResponse } from '../../../Models/Reponse/mainErrorResponse';
 import { LoginRequest } from '../../../Models/Requests/Authentication/login';
 import { MainSuccessResponse } from '../../../Models/Reponse/mainSuccessReponse';
 import { ConfirmEmailRequest } from '../../../Models/Requests/Authentication/confirmEmail';
 import { ResetPasswordRequest } from '../../../Models/Requests/Authentication/resetPassword';
 import { jwtDecode } from 'jwt-decode';
+import { RefreshTokenRequest } from '../../../Models/Requests/Authentication/refreshToken';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private userKey = 'token';
   private apiUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
 
   login(request: LoginRequest): Observable<MainErrorResponse | MainSuccessResponse> {
-    return this.httpClient.post<MainErrorResponse | MainSuccessResponse>(`${this.apiUrl}/identity/login`, request);
+    return this.httpClient.post<MainErrorResponse | MainSuccessResponse>(`${this.apiUrl}/identity/login`, request).pipe(
+      map((response) => {        
+        const res = response as MainSuccessResponse;        
+        if(!res.isFailure) {
+          localStorage.setItem(this.userKey, JSON.stringify(res.value));
+        }
+        return response;
+      })
+    );
   }
 
   register(request: RegisterRequest): Observable<MainErrorResponse | MainSuccessResponse> {
@@ -38,12 +48,19 @@ export class AuthService {
     return this.httpClient.put<MainErrorResponse | MainSuccessResponse>(`${this.apiUrl}/identity/reset-password`, request);
   }
 
-  refreshAccessToken() {
-    
+  refreshAccessToken(request: RefreshTokenRequest): Observable<MainErrorResponse | MainSuccessResponse> {
+    return this.httpClient.put<MainErrorResponse | MainSuccessResponse>(` ${this.apiUrl}/identity/refresh-token`, request);
   }
 
-  saveToken(token: string) {
-    localStorage.setItem('jwtToken', token);
+  logout = (): void => {
+    localStorage.removeItem(this.userKey);
+  }
+
+  getRefreshTokenModel(): RefreshTokenRequest | null {
+    const tokens = localStorage.getItem(this.userKey);
+    if(!tokens) return null;
+    const tokenDetail: RefreshTokenRequest = JSON.parse(tokens);
+    return tokenDetail;
   }
 
   isLoggedIn() {
@@ -57,9 +74,10 @@ export class AuthService {
     return decodedToken.role || null;
   }
 
-  private getToken = (): string | null => {
-    const token = localStorage.getItem('jwtToken');
+  getToken = (): string | null => {
+    const token = localStorage.getItem(this.userKey);    
     if (!token) return null;
-    return token;
+    const result:  RefreshTokenRequest = JSON.parse(token);
+    return result.accessToken;
   }
 }

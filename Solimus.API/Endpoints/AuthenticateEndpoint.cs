@@ -27,8 +27,8 @@ public class AuthenticateEndpoint : ICarterModule
 
     private static async Task<IResult> Login(LoginRequest request, IAuthenticationService authentication)
     {
-        var response = await authentication.LoginAsync(request);
-
+        var response = await authentication.LoginAsync(request);        
+        
         return response.ToHttpResponse();
     }
 

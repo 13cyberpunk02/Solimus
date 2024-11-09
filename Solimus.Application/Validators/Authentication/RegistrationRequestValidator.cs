@@ -18,6 +18,11 @@ public class RegistrationRequestValidator : AbstractValidator<RegistrationReques
             .Matches(@"[a-z]+").WithMessage("Пароль должен содержать хотя бы одну маленькую букву.")
             .Matches(@"[0-9]+").WithMessage("Пароль должен содержать хотя бы одну цифру.")
             .Matches(@"[\@\!\?\*\.]+").WithMessage("Пароль должен содержать хотя бы одну из этих символов: [@, !, ?, *].");
+
+        RuleFor(c => c.ConfirmPassword)
+            .Equal(p => p.Password)
+            .WithMessage("Пароль подтверждения и пароль не совпадают");
+
         RuleFor(x => x.Username)
             .NotEmpty().WithMessage("Имя пользователя обязательно нужно заполнить.")
             .MinimumLength(3).WithMessage("Имя пользователя должен состоять минимум от 3 символов.")

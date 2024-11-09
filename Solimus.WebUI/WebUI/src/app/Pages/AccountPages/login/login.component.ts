@@ -1,27 +1,25 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import { PasswordInputComponent } from "../../../Components/password-input/password-input/password-input.component";
 import PasswordValidator from '../../../Shared/Validators/password-validator';
 import { AuthService } from '../../../Services/CommonServices/Authentication/auth.service';
-import { RegisterRequest } from '../../../Models/Requests/Authentication/register';
 import { LoginRequest } from '../../../Models/Requests/Authentication/login';
 import { MainErrorResponse } from '../../../Models/Reponse/mainErrorResponse';
 import { MainSuccessResponse } from '../../../Models/Reponse/mainSuccessReponse';
 import { ToastService, ToastType } from '../../../Services/CommonServices/Toast/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RegisterRequest } from '../../../Models/Requests/Authentication/register';
+import { RefreshTokenRequest } from '../../../Models/Requests/Authentication/refreshToken';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    NgClass,
+  imports: [    
     CommonModule,
-    FontAwesomeModule,
-    PasswordInputComponent,
+    FontAwesomeModule,    
     ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
@@ -30,9 +28,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent {
 
   loginForm!: FormGroup;
-  registerForm!: FormGroup;
-  loginModel: LoginRequest = { email: '', password: '' };
-  registerModel: RegisterRequest = { email: '', password: '', username: '' };
+  registerForm!: FormGroup;    
   router = inject(Router);
   selectedTab: string = 'login';
   loginPasswordVisible: boolean = false;
@@ -43,8 +39,6 @@ export class LoginComponent {
 
   confirmPasswordVisible: boolean = false;
   confirmPasswordVisibleIcon: IconDefinition = faEye;
-
-
 
   constructor(
     private loginFb: FormBuilder,
@@ -72,11 +66,7 @@ export class LoginComponent {
       }
       if (loginModel) {
         this.authService.login(loginModel).subscribe({
-          next: (response: MainErrorResponse | MainSuccessResponse) => {
-            const result = response as MainSuccessResponse;
-            this.authService.saveToken(result.value);
-            this.toast.show('Успешная авторизация', ToastType.Success);
-          },
+          next: () => this.toast.show('Успешная авторизация', ToastType.Success),
           error: (response: HttpErrorResponse) => {
             this.toast.show(response.error.error.message, ToastType.Error);
           }
@@ -88,14 +78,18 @@ export class LoginComponent {
   }
 
   onRegisterSubmit() {
-    if (this.registerForm.valid) {
-      this.registerModel.email = this.registerForm.get('email')?.value;
-      this.registerModel.password = this.registerForm.get('password')?.value;
-      this.registerModel.username = this.registerForm.get('user_name')?.value;
-      this.authService.register(this.registerModel).subscribe({
+    if (this.registerForm.valid) {  
+      const registerModel: RegisterRequest = {
+        email: this.registerForm.get('email')?.value,
+        username: this.registerForm.get('user_name')?.value,
+        password: this.registerForm.get('password')?.value,
+        confirmPassword: this.registerForm.get('confirmPassword')?.value
+      };
+      this.authService.register(registerModel).subscribe({
         next: (response: MainErrorResponse | MainSuccessResponse) => {
           const message = response as MainSuccessResponse;
           this.toast.show(message.value, ToastType.Success);
+          this.router.navigate(['/']);
         },
         error: (response: HttpErrorResponse) => {
           this.toast.show(response.error.error.message, ToastType.Error);
