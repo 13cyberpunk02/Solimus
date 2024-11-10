@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Category } from '../../../Models/Requests/Category/category';
-import { CommonModule, NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RectangleComponent } from "../../../Components/rectangle/rectangle.component";
 
 
@@ -8,12 +8,18 @@ import { RectangleComponent } from "../../../Components/rectangle/rectangle.comp
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RectangleComponent, NgStyle],
+  imports: [CommonModule, RectangleComponent ],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
 export class CategoryPageComponent implements OnInit {
   categories: Category[] = [];
+
+
+  scrollRight() {
+    const container = document.querySelector('.flex.overflow-x-auto') as HTMLElement;
+    container.scrollBy({ left: 200, behavior: 'smooth' });
+  }
 
 
   ngOnInit(): void {    
@@ -56,7 +62,6 @@ export class CategoryPageComponent implements OnInit {
       Id: "8",
       Image: '/groups/adult.png',
       Name: '18+'
-    }); 
+    });     
   }
-
 }

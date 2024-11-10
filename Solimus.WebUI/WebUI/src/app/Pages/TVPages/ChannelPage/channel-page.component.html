@@ -2,5 +2,12 @@
     <div class="text-center">
         <h1 class="text-2xl font-bold">Каналы</h1>
     </div>
-    <app-search-tool [findItemName]="findItemName"></app-search-tool>    
+    <app-search-tool [findItemName]="findItemName"></app-search-tool>
+    <div class="relative container mx-auto mt-5 flex flex-wrap justify-center">
+        @for (channel of channels; track channel.Name) {
+        <div class="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 flex justify-center">
+            <app-rectangle [imageUrl]="channel.Image" [title]="channel.Name"></app-rectangle>
+        </div>
+        }
+    </div>
 </div>

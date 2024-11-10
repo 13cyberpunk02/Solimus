@@ -41,20 +41,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapCarter();
 
-#region ContextSeed
-
-using var scope = app.Services.CreateScope();
-try
-{
-    var contextSeedService = scope.ServiceProvider.GetService<ContextSeedService>();
-    await contextSeedService.InitializeContextAsync();
-}
-catch(Exception ex)
-{
-    var logger =  scope.ServiceProvider.GetService<ILogger<Program>>();
-    logger.LogError(ex.Message, "Не получилось иницилизировать  и добавить стартуемые данные в базу данных.");
-}
-
-#endregion
-
 app.Run();

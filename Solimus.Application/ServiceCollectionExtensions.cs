@@ -14,8 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IEmailService, EmailService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IRoleService, RoleService>();
-        services.AddScoped<ContextSeedService>();
+        services.AddScoped<IRoleService, RoleService>();        
         return services;
     }
 }
