@@ -1,5 +1,5 @@
 ﻿using Solimus.Application.Common.Results;
-using Solimus.Application.Models.Request.User.Request;
+using Solimus.Application.Models.Request.User;
 
 namespace Solimus.Application.Interfaces;
 

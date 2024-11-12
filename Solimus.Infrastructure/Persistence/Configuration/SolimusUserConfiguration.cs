@@ -14,10 +14,12 @@ public class SolimusUserConfiguration : IEntityTypeConfiguration<SolimusUser>
         {
             Id = "05e2a611-ac9c-433a-af1e-ee6e2e393ccd",
             UserName = "Administrator",
+            NormalizedUserName = "Administrator".ToUpper(),
             Email = "admin@domain.ru",
+            NormalizedEmail = "admin@domain.ru".ToUpper(),
             EmailConfirmed = true
         };
-        passwordHasher.HashPassword(user, "P@ssword1");
+        user.PasswordHash = passwordHasher.HashPassword(user, "P@ssword1");
 
         builder.ToTable(nameof(SolimusUser));
         builder.HasData(user);

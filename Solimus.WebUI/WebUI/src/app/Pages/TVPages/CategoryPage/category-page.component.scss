@@ -1,0 +1,8 @@
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Скрыть полосу прокрутки в Chrome, Safari и других вебкит-браузерах */
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* Скрыть полосу прокрутки в Internet Explorer и Edge */
+    scrollbar-width: none; /* Скрыть полосу прокрутки в Firefox */
+  }

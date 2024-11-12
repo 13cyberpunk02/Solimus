@@ -1,7 +1,6 @@
 using Carter;
 using Solimus.API.Extensions;
 using Solimus.Application;
-using Solimus.Application.Services;
 using Solimus.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +22,7 @@ var app = builder.Build();
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowCredentials()
+    .AllowAnyMethod()    
     .WithOrigins(builder.Configuration["Jwt:Audience"]!);
 });
 

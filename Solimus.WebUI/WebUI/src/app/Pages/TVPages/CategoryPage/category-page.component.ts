@@ -1,28 +1,32 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from '../../../Models/Requests/Category/category';
 import { CommonModule } from '@angular/common';
 import { RectangleComponent } from "../../../Components/rectangle/rectangle.component";
-
-
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons'
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RectangleComponent ],
+  imports: [CommonModule, RectangleComponent, FontAwesomeModule],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
 export class CategoryPageComponent implements OnInit {
+  rightIcon = faArrowAltCircleRight;
+  leftIcon = faArrowAltCircleLeft;
   categories: Category[] = [];
 
+  @ViewChild('scrollContainer', { read: ElementRef }) scrollContainer!: ElementRef;
 
-  scrollRight() {
-    const container = document.querySelector('.flex.overflow-x-auto') as HTMLElement;
-    container.scrollBy({ left: 200, behavior: 'smooth' });
+  scrollLeft() {
+    this.scrollContainer.nativeElement.scrollBy({ left: -200, behavior: 'smooth' });
   }
 
+  scrollRight() {
+    this.scrollContainer.nativeElement.scrollBy({ left: 200, behavior: 'smooth' });
+  }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.categories.push({
       Id: "1",
       Image: '/groups/theatre.png',
@@ -62,6 +66,16 @@ export class CategoryPageComponent implements OnInit {
       Id: "8",
       Image: '/groups/adult.png',
       Name: '18+'
-    });     
+    });
+    this.categories.push({
+      Id: "9",
+      Image: '/groups/adult.png',
+      Name: '18+'
+    });
+    this.categories.push({
+      Id: "10",
+      Image: '/groups/adult.png',
+      Name: '18+'
+    });
   }
 }

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.API", "Solimus.API\Solimus.API.csproj", "{0CBAC5B5-2D9F-406A-B888-02CB0F216649}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solimus.API", "Solimus.API\Solimus.API.csproj", "{0CBAC5B5-2D9F-406A-B888-02CB0F216649}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Domain", "Solimus.Domain\Solimus.Domain.csproj", "{F3CED9B8-4EE5-4B28-9E2B-31CD5FD99234}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solimus.Domain", "Solimus.Domain\Solimus.Domain.csproj", "{F3CED9B8-4EE5-4B28-9E2B-31CD5FD99234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Application", "Solimus.Application\Solimus.Application.csproj", "{D42D5EA3-6956-41C5-A979-457AB5B9E6C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solimus.Application", "Solimus.Application\Solimus.Application.csproj", "{D42D5EA3-6956-41C5-A979-457AB5B9E6C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Infrastructure", "Solimus.Infrastructure\Solimus.Infrastructure.csproj", "{A4C2316F-CC1A-42B9-947E-CA11C853AA49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solimus.Infrastructure", "Solimus.Infrastructure\Solimus.Infrastructure.csproj", "{A4C2316F-CC1A-42B9-947E-CA11C853AA49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

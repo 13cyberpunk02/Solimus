@@ -1,38 +1,30 @@
-<!--<div
-    class="rounded-md bg-transparent text-black dark:text-white ">
-    <div class="text-center">
-        <h1 class="text-2xl font-bold">Категории</h1>
-    </div>    
-    <div class="relative flex items-center mt-5">
-        <div class="flex w-1/6 p-2" *ngFor="let category of categories; let i = index">
-            <app-rectangle [imageUrl]="category.Image" [title]="category.Name"></app-rectangle>
-        </div>
-    </div>
-</div>
--->
-
-<div class="rounded-md bg-transparent text-black dark:text-white">
-    <div class="text-center">
-      <h1 class="text-2xl font-bold">Категории</h1>
-    </div>
-  
-    <div class="relative mt-5">
-      <!-- Контейнер с горизонтальным скроллингом -->
-      <div class="flex overflow-x-auto py-2 space-x-4">
-        <div *ngFor="let category of categories; let i = index" class="flex-shrink-0 w-1/6 p-2">
-          <app-rectangle [imageUrl]="category.Image" [title]="category.Name"></app-rectangle>
-        </div>
-      </div>
-  
-      <!-- Кнопка для прокрутки -->
-      <div class="flex justify-center mt-4">
-        <button
-          *ngIf="categories.length > 6" 
-          (click)="scrollRight()"
-          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-          Показать ещё
-        </button>
-      </div>
-    </div>
+<div class="rounded-md bg-transparent text-black dark:text-white overflow-x-hidden">
+  <div class="text-center">
+    <h1 class="text-2xl font-bold">Категории</h1>
   </div>
-  
+
+  <div class="relative mt-5 flex items-center">
+    <!-- Кнопка прокрутки влево -->
+    @if (categories.length > 6) {
+      <button (click)="scrollLeft()"
+        class="absolute left-2 top-1/2 -translate-y-1/4 z-10 p-2 ml-5 text-3xl text-black rounded-full hover:bg-yellow-300 dark:hover:bg-slate-500 dark:text-white hidden sm:block">
+        <fa-icon [icon]="leftIcon"></fa-icon>
+      </button>
+      }
+
+    <!-- Контейнер с горизонтальным скроллингом и скрытой полосой прокрутки -->
+    <div #scrollContainer class="flex overflow-x-scroll scrollbar-hide py-2 space-x-4 mx-10 w-full">
+      <div *ngFor="let category of categories; let i = index" class="flex-shrink-0 w-1/3 sm:w-1/6 p-2">
+        <app-rectangle [imageUrl]="category.Image" [title]="category.Name"></app-rectangle>
+      </div>
+    </div>
+
+    <!-- Кнопка прокрутки вправо -->
+    @if(categories.length > 6){
+      <button (click)="scrollRight()"
+        class="absolute right-0 top-1/2 -translate-y-1/4 z-10 p-2 mr-5 text-3xl text-black rounded-full hover:bg-yellow-300 dark:hover:bg-slate-500 dark:text-white hidden sm:block">      
+        <fa-icon [icon]="rightIcon"></fa-icon>
+      </button>
+      }
+  </div>
+</div>

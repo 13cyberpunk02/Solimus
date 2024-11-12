@@ -14,99 +14,44 @@ import { RectangleComponent } from "../../../Components/rectangle/rectangle.comp
 export class ChannelPageComponent implements OnInit {
   
   findItemName = 'канала';
-  channels: Channel[] = [];
-  items: string[] = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+  channels: Channel[] = [];  
 
   ngOnInit(): void {
     this.channels.push({
       Id: "1",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
+      Image: "http://epg.one/img/5212.png",
+      Name: "MM Ужасы HD",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/13099/index.m3u8"
     });
     this.channels.push({
       Id: "2",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
+      Image: "http://epg.one/img/1116.png",
+      Name: "Z! Horror HD",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/14137/index.m3u8"
     });
     this.channels.push({
       Id: "3",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
+      Image: "http://epg.one/img/5514.png",
+      Name: "BCU Marvel HD",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/15025/index.m3u8"
     });
     this.channels.push({
       Id: "4",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
+      Image: "http://epg.one/img/6236.png",
+      Name: "KLI Fantastic HD",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/18050/index.m3u8"
     });
     this.channels.push({
       Id: "5",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
+      Image: "http://epg.one/img/680.png",
+      Name: "ТНТ Music HD",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/19223/index.m3u8"
     });
     this.channels.push({
       Id: "6",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "7",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "8",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "9",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "10",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "11",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "12",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "13",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "14",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });
-    this.channels.push({
-      Id: "15",
-      Image: "dwd",
-      Name: "Первый",
-      Source: "wdwqdwd"
-    });    
+      Image: "http://epg.one/img/4474.png",
+      Name: "National Geographic",
+      Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/14001/index.m3u8"
+    });   
   }
 }

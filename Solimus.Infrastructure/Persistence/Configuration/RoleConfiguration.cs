@@ -11,7 +11,8 @@ public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
         var adminRole = new IdentityRole
         {
             Id = "3f62b9a9-871c-47d3-b325-93d0b43ae8da",
-            Name = "Administrator"
+            Name = "Administrator",
+            NormalizedName = "Administrator".ToUpper()
         };
 
         builder.HasData(adminRole);

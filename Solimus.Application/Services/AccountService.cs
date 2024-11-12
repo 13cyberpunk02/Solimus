@@ -3,7 +3,7 @@ using Solimus.Application.Common.Results;
 using Solimus.Application.DTO_s.User;
 using Solimus.Application.Error.AccountErrors;
 using Solimus.Application.Interfaces;
-using Solimus.Application.Models.Request.User.Request;
+using Solimus.Application.Models.Request.User;
 using Solimus.Application.Validators.User;
 using Solimus.Domain.Entities;
 

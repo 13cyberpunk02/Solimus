@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgClass } from "@angular/common";
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons'
 import { faSun } from '@fortawesome/free-solid-svg-icons'
@@ -8,7 +7,6 @@ import { faSun } from '@fortawesome/free-solid-svg-icons'
   selector: 'app-theme-toggler',
   standalone: true,
   imports: [
-    NgClass,
     FontAwesomeModule,
   ],
   templateUrl: './theme-toggler.component.html',
