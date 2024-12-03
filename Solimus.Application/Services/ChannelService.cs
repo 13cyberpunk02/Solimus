@@ -1,4 +1,6 @@
 ﻿namespace Solimus.Application.Services;
 
-public class ChannelRepositoryService
-{ }
+public class ChannelService
+{
+    
+}
