@@ -8,6 +8,7 @@ var dbConnection = builder.Configuration["ConnectionStrings:SqlServerConnection"
 
 builder.Services.AddAuthorization();
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddEntityServices();
 builder.Services.AddInfrastructure(dbConnection!);
 builder.Services.AddApplication();
 builder.Services.AddCarter();
@@ -15,7 +16,6 @@ builder.Services.AddCors();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

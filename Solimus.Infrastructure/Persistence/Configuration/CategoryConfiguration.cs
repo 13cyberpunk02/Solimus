@@ -15,7 +15,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(30)
-            .HasColumnType("varchar(30)");
+            .HasColumnType("nvarchar(30)");
 
         builder.HasMany(c => c.Channels)
             .WithOne(c => c.Category)

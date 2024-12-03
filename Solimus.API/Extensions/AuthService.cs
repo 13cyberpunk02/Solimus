@@ -19,7 +19,7 @@ public static class AuthService
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "Solimus TV API", Version = "v1" });
             options.SwaggerGeneratorOptions.DocumentFilters.Add(new LowerCaseDocumentFilter());
-
+            
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",

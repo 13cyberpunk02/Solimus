@@ -7,7 +7,7 @@ import { ChannelPageComponent } from "../ChannelPage/channel-page.component";
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [ToolbarComponent, CategoryPageComponent, FooterComponent, ChannelPageComponent],
+  imports: [ToolbarComponent, CategoryPageComponent, ChannelPageComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })

@@ -99,7 +99,7 @@ public class AuthenticationService(
         if (!result.Succeeded)
             return Result.Failure(AuthenticationError.CreateInvalidLoginRequestError(result.Errors.Select(x => x.Description)));
 
-        return Result.Success(new { AccessToken = token, RefreshToken = refreshToken, Email = user.Email});
+        return Result.Success(new { AccessToken = token, RefreshToken = refreshToken, user.Email});
     }
 
     public async Task<Result> RefreshAccessToken(RefreshTokenRequest request)
@@ -112,8 +112,8 @@ public class AuthenticationService(
         if(user is null)
             return Result.Failure(AuthenticationError.UserNotFound);
         var principal = jwtService.GetPrincipalFromExpiredToken(request.Token);
-
-        if (principal is null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+        
+        if (principal.Identity is null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             return Result.Failure(AuthenticationError.ErrorRequest);
 
         var newAccessToken = await jwtService.GenerateJwtTokenAsync(user);
@@ -127,7 +127,7 @@ public class AuthenticationService(
 
         if(!result.Succeeded)
             return Result.Failure(AuthenticationError.CreateInvalidLoginRequestError(result.Errors.Select(x => x.Description)));
-        return Result.Success(new { AccessToken = newAccessToken, RefreshToken = newRefreshToken, Email = user.Email });
+        return Result.Success(new { AccessToken = newAccessToken, RefreshToken = newRefreshToken, user.Email });
     }
 
     public async Task<Result> RegistrationAsync(RegistrationRequest registrationRequest)

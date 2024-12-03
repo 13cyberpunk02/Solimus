@@ -3,7 +3,7 @@
 namespace Solimus.Application.Interfaces;
 
 public interface IEmailService
-{
+{   
     Task<bool> SendRegistrationConfirmationMailAsync(EmailOptions emailOptions, EmailRegistrationConfirmOptions emailRegistrationConfirmOptions,
         string toEmail, string userName);
 

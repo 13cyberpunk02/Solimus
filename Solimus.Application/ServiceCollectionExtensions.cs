@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Solimus.Application.Interfaces;
 using Solimus.Application.Services;
+using Solimus.Domain.Interfaces;
 
 namespace Solimus.Application;
 
@@ -14,7 +15,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IEmailService, EmailService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IRoleService, RoleService>();        
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IChannelService, ChannelService>();
         return services;
     }
 }

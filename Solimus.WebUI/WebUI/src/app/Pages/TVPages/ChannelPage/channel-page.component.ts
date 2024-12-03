@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchToolComponent } from "../../../Components/search-component/search-tool.component";
 import { Channel } from '../../../Models/Requests/Channel/channel';
 import { RectangleComponent } from "../../../Components/rectangle/rectangle.component";
+import {FormsModule} from "@angular/forms";
 
 
 @Component({
   selector: 'app-channel-page',
   standalone: true,
-  imports: [SearchToolComponent, RectangleComponent],
+  imports: [RectangleComponent, FormsModule],
   templateUrl: './channel-page.component.html',
   styleUrl: './channel-page.component.scss'
 })
 export class ChannelPageComponent implements OnInit {
-  
-  findItemName = 'канала';
-  channels: Channel[] = [];  
+  filteredChannels: Channel[] = [];
+  searchTerm: string = '';
+  channels: Channel[] = [];
 
   ngOnInit(): void {
     this.channels.push({
@@ -52,6 +52,17 @@ export class ChannelPageComponent implements OnInit {
       Image: "http://epg.one/img/4474.png",
       Name: "National Geographic",
       Source: "http://14rfkfew.otttv.pw/iptv/6EDNE7ZGASZMBQ/14001/index.m3u8"
-    });   
+    });
+    this.filteredChannels = this.channels;
+  }
+
+  onSearchChange(){
+    if(this.searchTerm) {
+      this.filteredChannels = this.channels.filter(channel => {
+          return channel.Name.toLocaleLowerCase().includes(this.searchTerm.toLowerCase());
+      });
+    } else {
+      this.filteredChannels = this.channels;
+    }
   }
 }

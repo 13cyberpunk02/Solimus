@@ -30,10 +30,10 @@ public class AccountService(
     {
         var users = userManager.Users;
 
-        if(users is null)
+        if(!users.Any())
             return Result.Failure(AccountErrors.UserNotFound);
 
-        var reponse = users.Select(x => new UserResponseDto
+        var response = users.Select(x => new UserResponseDto
         {
             Firstname = x.Firstname,
             Lastname = x.Lastname,
@@ -44,7 +44,7 @@ public class AccountService(
             JoinedDate = x.JoinedDate            
         }).ToList();
 
-        return Result.Success(reponse);
+        return Result.Success(response);
     }
 
     public async Task<Result> GetCurrentUserDetails(string userId)

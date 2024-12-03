@@ -1,23 +1,25 @@
-<div
-  class="flex items-center border-transparent border-4 dark:text-white text-black rounded-full hover:border-yellow-700 dark:hover:border-slate-500">      
-  <div class="relative">    
-    <button (click)="toggleDropdown()" class="flex p-2 items-center">
+<div class="flex rounded-full items-center border-transparent border-4 text-black hover:border-yellow-700 dark:hover:border-slate-500 dark:text-white " (clickOutside)="isMenuOpen = false">
+  <div class="relative">
+    <button
+      (click)="toggleDropdown()"
+      class="flex p-2 items-center">
       <h3 class="mr-3">{{user.firstName + " " + user.lastName}}</h3>
       <img src="me.jpg" class="h-8 w-8 rounded-full object-cover" alt="User Avatar" />
     </button>
-    <div *ngIf="isAvatarDropdownOpen" (clickOutside)="closeDropdown()"
-      class="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10">
-      <div class="bg-yellow-600 dark:bg-slate-700 rounded-md divide-y">
-        <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
-          <fa-icon [icon]="userIcon" class="mr-2"></fa-icon>
-          Профиль</a>
-        <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
-          <fa-icon [icon]="userSettings" class="mr-2"></fa-icon>
-          Настройки</a>
-        <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
-          <fa-icon [icon]="logoutIcon" class="mr-2"></fa-icon>
-          Выход</a>
+    @if (isMenuOpen) {
+      <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10">
+        <div class="bg-yellow-600 dark:bg-slate-700 rounded-md divide-y">
+          <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
+            <fa-icon [icon]="userIcon" class="mr-2"></fa-icon>
+            Профиль</a>
+          <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
+            <fa-icon [icon]="userSettings" class="mr-2"></fa-icon>
+            Настройки</a>
+          <a href="#" class="block px-4 py-2 hover:bg-yellow-700 dark:hover:bg-slate-500">
+            <fa-icon [icon]="logoutIcon" class="mr-2"></fa-icon>
+            Выход</a>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

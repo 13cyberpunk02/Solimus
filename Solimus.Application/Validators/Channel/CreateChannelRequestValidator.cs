@@ -8,9 +8,9 @@ public class CreateChannelRequestValidator : AbstractValidator<CreateChannelRequ
     public CreateChannelRequestValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("")
-            .NotNull().WithMessage("")
-            .MaximumLength(30).WithMessage("")
-            .MinimumLength(1).WithMessage("");
+            .NotEmpty().WithMessage("Имя канала обязательна для заполнения")
+            .NotNull().WithMessage("Имя канала не может быть пустым")
+            .MaximumLength(30).WithMessage("Имя канала может содержать не более 30 символов")
+            .MinimumLength(1).WithMessage("Имя канала может содержать не менее 1 символа");
     }
 }

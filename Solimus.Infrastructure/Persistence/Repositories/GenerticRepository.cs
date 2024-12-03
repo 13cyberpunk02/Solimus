@@ -16,7 +16,7 @@ public class GenericRepository<TEntity>(SolimusContext context) : IGenericReposi
 
     public void Delete(TEntity entity) => _dbSet.Remove(entity);
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbSet.AsNoTracking().ToListAsync();
+    public async Task<List<TEntity>> GetAllAsync() => await _dbSet.AsNoTracking().ToListAsync();
 
     public async Task<TEntity?> GetById(Guid id) => await _dbSet.FindAsync(id);
 

@@ -1,6 +1,9 @@
-﻿namespace Solimus.Application.Models.Reponse.Channel;
+﻿namespace Solimus.Application.Models.Response.Channel;
 
-public class GetChannelReponse
-{
-    
-}
+public record GetChannelResponse(
+    string Id,
+    string Name,
+    string? CategoryId,
+    string? LogotypeId,
+    string? Source
+    );

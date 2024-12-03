@@ -15,7 +15,7 @@ public class ChannelConfiguration : IEntityTypeConfiguration<Channel>
         builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(30)
-            .HasColumnType("varchar(30)");
+            .HasColumnType("nvarchar(30)");
 
         builder.HasOne(c => c.Source)
             .WithOne(s => s.Channel)

@@ -45,9 +45,9 @@ public class RoleService(RoleManager<IdentityRole> roleManager, UpdateRoleReques
     public Result GetAllRoles()
     {
         var roles = roleManager.Roles;
-        if(roles is null)
+        if(!roles.Any())
             return Result.Success("Нет ролей, создайте хотя бы одну");
-        var result = roles.Select(x => new { Id = x.Id, Name = x.Name });
+        var result = roles.Select(x => new { x.Id, x.Name });
         return Result.Success(result);
     }
 
@@ -60,7 +60,7 @@ public class RoleService(RoleManager<IdentityRole> roleManager, UpdateRoleReques
         
         if(role is null)
             return Result.Failure(RolesError.RoleDoesntExist);
-        return Result.Success(new {Id = role.Id, Name = role.Name });
+        return Result.Success(new { role.Id, role.Name });
     }
 
     public async Task<Result> GetRoleByName(string roleName)
@@ -73,7 +73,7 @@ public class RoleService(RoleManager<IdentityRole> roleManager, UpdateRoleReques
             return Result.Failure(RolesError.RoleDoesntExist);
         
         var role = await roleManager.FindByNameAsync(roleName);
-        return Result.Success(new { Id = role.Id, Name = role.Name });
+        return Result.Success(new { role.Id, role.Name });
     }
 
     public async Task<Result> UpdateRole(UpdateRoleRequest request)

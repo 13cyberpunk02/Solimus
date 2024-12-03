@@ -5,8 +5,9 @@ namespace Solimus.Infrastructure.Persistence.Repositories;
 
 public class UnitOfWork(SolimusContext context) : IUnitOfWork
 {
-    public async Task CommitAsync()
+    public async Task<bool> CommitAsync()
     {
-        await context.SaveChangesAsync();
+        var result = await context.SaveChangesAsync();
+        return result > 0;
     }
 }
