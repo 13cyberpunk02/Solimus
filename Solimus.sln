@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Domain", "src\Solimus.Domain\Solimus.Domain.csproj", "{D85320D7-509C-4F81-8633-3B866FCB1F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Application", "src\Solimus.Application\Solimus.Application.csproj", "{2B636525-5D7A-4006-A045-E1D933D4BF3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.Infrastructure", "src\Solimus.Infrastructure\Solimus.Infrastructure.csproj", "{D34E6000-4553-4CBE-806E-6DBBBB8EEF34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solimus.API", "src\Solimus.API\Solimus.API.csproj", "{12CF8E69-CDAD-4541-A320-60CB5A9A7737}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D85320D7-509C-4F81-8633-3B866FCB1F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D85320D7-509C-4F81-8633-3B866FCB1F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D85320D7-509C-4F81-8633-3B866FCB1F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D85320D7-509C-4F81-8633-3B866FCB1F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B636525-5D7A-4006-A045-E1D933D4BF3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B636525-5D7A-4006-A045-E1D933D4BF3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B636525-5D7A-4006-A045-E1D933D4BF3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B636525-5D7A-4006-A045-E1D933D4BF3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34E6000-4553-4CBE-806E-6DBBBB8EEF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34E6000-4553-4CBE-806E-6DBBBB8EEF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34E6000-4553-4CBE-806E-6DBBBB8EEF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34E6000-4553-4CBE-806E-6DBBBB8EEF34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CF8E69-CDAD-4541-A320-60CB5A9A7737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CF8E69-CDAD-4541-A320-60CB5A9A7737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CF8E69-CDAD-4541-A320-60CB5A9A7737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CF8E69-CDAD-4541-A320-60CB5A9A7737}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
