@@ -10,4 +10,9 @@
       <ProjectReference Include="..\Solimus.Application\Solimus.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\Context\" />
+      <Folder Include="Data\Repositories\" />
+    </ItemGroup>
+
 </Project>
