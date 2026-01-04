@@ -23,6 +23,7 @@ public static class ResultsExtension
             ErrorTypes.NotFound     => Results.NotFound(CreateProblem(error)),
             ErrorTypes.Forbidden    => Results.Forbid(),
             ErrorTypes.Unauthorized => Results.Unauthorized(),
+            ErrorTypes.InternalServerError => Results.InternalServerError(error),
             _                       => Results.Problem(
                 title: error.Code,
                 detail: error.Message,

@@ -7,4 +7,5 @@ public static class ErrorTypes
     public const string BadRequest = "Ошибка в запросе";
     public const string Unauthorized = "Ошибка авторизации";
     public const string Forbidden = "Ошибка доступа";
+    public const string InternalServerError = "Ошибка сервера";
 }

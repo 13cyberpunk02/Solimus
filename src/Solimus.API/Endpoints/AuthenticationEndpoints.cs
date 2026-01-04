@@ -14,7 +14,13 @@ public static class AuthenticationEndpoints
             .WithTags("Authentication");
 
         group.MapPost("login", Login)
+            .WithRequestValidation<LoginRequest>()
             .WithSummary("Login");
+        
+        group.MapPost("register", Registration)
+            .WithRequestValidation<RegistrationRequest>()
+            .WithSummary("Registration");
+        
         return group;
     }
 
@@ -22,6 +28,13 @@ public static class AuthenticationEndpoints
         CancellationToken cancellationToken = default)
     {
         var response = await service.Login(request, cancellationToken);
+        return response.ToHttpResponse();
+    }
+
+    private static async Task<IResult> Registration(IAuthenticationService service, RegistrationRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var response = await service.Register(request, cancellationToken);
         return response.ToHttpResponse();
     }
 }
