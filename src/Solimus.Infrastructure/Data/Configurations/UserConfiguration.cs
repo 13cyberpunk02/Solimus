@@ -36,12 +36,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(100);
         
         builder.Property(u => u.JoinedDate)
-            .IsRequired()
-            .HasColumnType("datetime");
+            .IsRequired();
         
         builder.Property(u => u.UpdateTime)
-            .IsRequired()
-            .HasColumnType("datetime");
+            .IsRequired();
         
         builder.HasOne(u => u.RefreshToken)
             .WithOne(rt => rt.User)

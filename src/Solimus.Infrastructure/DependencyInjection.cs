@@ -22,7 +22,6 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         {
             var databaseOptions = serviceProvider.GetRequiredService<IOptionsMonitor<DatabaseOption>>().CurrentValue;
-
             options.UseNpgsql(databaseOptions.ConnectionString, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);

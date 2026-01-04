@@ -11,10 +11,8 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
     public IUserRoleRepository UserRoles =>  field is null ? field ??= new UserRoleRepository(context) : field;
     public IRefreshTokenRepository RefreshTokens => field is null ? field ??= new RefreshTokenRepository(context) : field;
     
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await context.SaveChangesAsync(cancellationToken);
-    }
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+        await context.SaveChangesAsync(cancellationToken);
     
     protected virtual void Dispose(bool disposing)
     {
