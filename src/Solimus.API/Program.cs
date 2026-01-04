@@ -6,7 +6,12 @@ using Solimus.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("./Environments/AppEnv.json", optional: true, reloadOnChange: true);
 
+builder.Services.AddOpenApiExtension();
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+
+
+builder.Services.AddJwtAuth(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
