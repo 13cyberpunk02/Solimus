@@ -4,5 +4,5 @@ namespace Solimus.Domain.Interfaces;
 
 public interface IRoleRepository : IGenericRepository<Role>
 {
-    
+    Task<Role?> GetRoleByName(string name, CancellationToken cancellationToken = default);
 }

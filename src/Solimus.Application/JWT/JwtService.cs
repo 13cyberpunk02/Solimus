@@ -16,6 +16,7 @@ public class JwtService(IOptionsMonitor<JwtOption> jwtOptions) : IJwtService
     {
         List<Claim> claims =
             [
+                new (ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new (JwtRegisteredClaimNames.Sub, user.UserName),
                 new (JwtRegisteredClaimNames.Email, user.Email),
                 new (JwtRegisteredClaimNames.Jti, Guid.CreateVersion7().ToString())
@@ -40,5 +41,38 @@ public class JwtService(IOptionsMonitor<JwtOption> jwtOptions) : IJwtService
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
         return Convert.ToBase64String(randomNumber);
+    }
+    
+    public ClaimsPrincipal? GetPrincipalFromExpiredToken(string accessToken)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = _jwtOptions.Issuer,
+            ValidAudience = _jwtOptions.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.PrivateKey)),
+            ValidateLifetime = false 
+        };
+        
+        var tokenHandler = new JwtSecurityTokenHandler();
+            
+        try
+        {
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
+                
+            if (securityToken is not JwtSecurityToken jwtSecurityToken 
+                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+
+            return principal;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

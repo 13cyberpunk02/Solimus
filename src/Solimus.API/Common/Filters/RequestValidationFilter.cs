@@ -23,8 +23,7 @@ public class RequestValidationFilter<TRequest>(ILogger<RequestValidationFilter<T
         if (!validationResult.IsValid)
         {
             logger.LogWarning("{Request}: Ошибка валидации.", requestName);
-            var errors = string.Join("\n", validationResult.Errors.Select(er => er.ErrorMessage));
-            return Result.Failure(BaseErrors.ValidationError(errors));
+            return Results.ValidationProblem(validationResult.ToDictionary());
         }
         
         logger.LogInformation("{Request}: Успешная валидация.", requestName);

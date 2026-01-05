@@ -5,6 +5,12 @@ using Solimus.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("./Environments/AppEnv.json", optional: true, reloadOnChange: true);
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole(options =>
+{
+    options.UseUtcTimestamp = true;
+    options.TimestampFormat = "dd.MM.yyyy HH:mm:ss.fff ";
+});
 
 builder.Services.AddOpenApiExtension();
 builder.Services.AddOpenApi();

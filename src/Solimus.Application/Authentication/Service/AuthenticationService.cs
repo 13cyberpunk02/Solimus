@@ -1,4 +1,5 @@
-﻿using Solimus.Application.Authentication.DTO_s;
+﻿using System.Security.Claims;
+using Solimus.Application.Authentication.DTO_s;
 using Solimus.Application.Common;
 using Solimus.Application.Common.ServiceErrors;
 using Solimus.Application.JWT;
@@ -15,9 +16,34 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
         if (user is null)
             return AuthenticationErrors.InvalidCredentials;
 
+        if(user.LockOutTime.HasValue && user.LockOutTime > DateTime.UtcNow)
+            return AuthenticationErrors.UserLockoutBan(user.LockOutTime.Value);
+
+        if (user.LockOutTime < DateTime.UtcNow)
+        {
+            user.LockOutTime = null;
+            unitOfWork.Users.Update(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+        
+        if (user.IncorrectPasswordCount == 5)
+        {
+            user.LockOutTime = DateTime.UtcNow.AddMinutes(10);
+            user.IncorrectPasswordCount = 0;
+            unitOfWork.Users.Update(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return AuthenticationErrors.UserLockoutBan(user.LockOutTime.Value);
+        }
+        
         var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
-        if (!isPasswordCorrect)
-            return AuthenticationErrors.InvalidCredentials;
+        
+        if (!isPasswordCorrect && user.IncorrectPasswordCount < 5)
+        {
+            user.IncorrectPasswordCount++;
+            unitOfWork.Users.Update(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return AuthenticationErrors.InvalidCredentialsWithIncorrectPassword(6 - user.IncorrectPasswordCount);
+        }
         
         var accessToken = jwtService.GenerateJwtToken(user);
         var refreshToken = jwtService.GenerateRefreshToken();
@@ -32,10 +58,12 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
             };
             await unitOfWork.RefreshTokens.AddAsync(refreshTokenEntityToAdd, cancellationToken);            
         }
-
-        refreshTokenEntity.Token = refreshToken;
-        refreshTokenEntity.User = user;
-        unitOfWork.RefreshTokens.Update(refreshTokenEntity);
+        else
+        {
+            refreshTokenEntity.Token = refreshToken;
+            refreshTokenEntity.User = user;
+            unitOfWork.RefreshTokens.Update(refreshTokenEntity);    
+        }
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
@@ -59,6 +87,13 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
         };
 
         await unitOfWork.Users.AddAsync(newUserToAdd, cancellationToken);
+        var userRole = await unitOfWork.Roles.GetRoleByName("User", cancellationToken);
+        var userRoleEntityToAdd = new UserRole
+        {
+            RoleId = userRole.RoleId,
+            UserId = newUserToAdd.UserId
+        };
+        await unitOfWork.UserRoles.AddAsync(userRoleEntityToAdd, cancellationToken);
         
         var accessToken = jwtService.GenerateJwtToken(newUserToAdd);
         var refreshToken = jwtService.GenerateRefreshToken();
@@ -73,5 +108,53 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
         
         var result = new LoginResponse(accessToken, refreshToken);
         return Result<LoginResponse>.Success(result);
+    }
+
+    public async Task<Result<LoginResponse>> RefreshToken(RefreshTokenRequest request, CancellationToken cancellationToken = default)
+    {
+        var principal = jwtService.GetPrincipalFromExpiredToken(request.AccessToken);
+        if (principal is null)
+            return AuthenticationErrors.InvalidToken;
+
+        var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            return AuthenticationErrors.InvalidToken;
+
+        var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
+        if(user is null)
+            return AuthenticationErrors.InvalidToken;
+        
+        var refreshToken = await unitOfWork.RefreshTokens.GetRefreshTokenByUserId(user.UserId, cancellationToken);
+        if(refreshToken is null || refreshToken.Token != request.RefreshToken)
+            return AuthenticationErrors.InvalidToken;
+
+        var newAccessToken = jwtService.GenerateJwtToken(user);
+        var newRefreshToken = jwtService.GenerateRefreshToken();
+
+        refreshToken.Token = newRefreshToken;
+        refreshToken.User = user;
+        unitOfWork.RefreshTokens.Update(refreshToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        return Result<LoginResponse>.Success(new LoginResponse(newAccessToken, newRefreshToken));
+    }
+
+    public async Task<Result<string>> Logout(Guid requestUserId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        if (requestUserId != userId)
+            return AuthenticationErrors.InvalidCredentials;
+        
+        var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
+        if (user is null)
+            return AuthenticationErrors.UserNotFound;
+
+        var refreshTokenEntity = await unitOfWork.RefreshTokens.GetRefreshTokenByUserId(user.UserId, cancellationToken);
+        if (refreshTokenEntity is null)
+            return AuthenticationErrors.UserAlreadyLoggedOut;
+        
+        refreshTokenEntity.Token = string.Empty;
+        unitOfWork.RefreshTokens.Update(refreshTokenEntity);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Result<string>.Success("Успешно вышли из своей уч. записи.");
     }
 }

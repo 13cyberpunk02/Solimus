@@ -13,7 +13,9 @@ public class User
 
     public DateTime JoinedDate { get; set; } = DateTime.UtcNow;
     public DateTime UpdateTime { get; set; } = DateTime.UtcNow;
-    
+    public DateTime? LockOutTime { get; set; }
+
+    public int IncorrectPasswordCount { get; set; } = 0;
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
     public virtual RefreshToken? RefreshToken { get; set; }
 }
