@@ -1,0 +1,199 @@
+/* ============================================
+   FOOTER COMPONENT STYLES
+   Uses global CSS variables from theme.css
+   ============================================ */
+
+:host {
+    display: block;
+}
+
+.footer {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        padding: 4rem 2rem 2rem;
+    }
+}
+
+/* ============================================
+   TOP SECTION
+   ============================================ */
+.footer-top {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .footer-top {
+        grid-template-columns: 2fr 2fr 1fr;
+        gap: 3rem;
+    }
+}
+
+/* Brand */
+.footer-brand {
+    max-width: 320px;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.brand-logo svg {
+    width: 36px;
+    height: 36px;
+}
+
+.logo-bg {
+    fill: var(--color-accent);
+}
+
+.logo-letter {
+    fill: white;
+}
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: var(--color-accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+}
+
+/* Links */
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+.footer-link {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-link:hover {
+    color: var(--color-accent);
+}
+
+/* Social Links */
+.footer-social {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-light);
+    color: var(--color-text-secondary);
+    transition: all var(--transition);
+}
+
+.social-link:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.social-link tui-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+.footer-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   BOTTOM SECTION
+   ============================================ */
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.copyright {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+}
+
+.made-with {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+}
+
+.heart {
+    color: var(--color-error);
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+}

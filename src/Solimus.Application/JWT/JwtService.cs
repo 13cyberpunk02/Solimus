@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,10 +17,11 @@ public class JwtService(IOptionsMonitor<JwtOption> jwtOptions) : IJwtService
     {
         List<Claim> claims =
             [
-                new (ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new (JwtRegisteredClaimNames.Sub, user.UserName),
+                new (JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
                 new (JwtRegisteredClaimNames.Email, user.Email),
-                new (JwtRegisteredClaimNames.Jti, Guid.CreateVersion7().ToString())
+                new (JwtRegisteredClaimNames.Name, user.UserName),
+                new ("role", string.Join(", ", user.UserRoles.Select(x => x.Role.RoleName).ToArray())),
+                new(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenLifetimeInMinutes).ToString(CultureInfo.CurrentCulture))
             ];
 
         var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.PrivateKey));

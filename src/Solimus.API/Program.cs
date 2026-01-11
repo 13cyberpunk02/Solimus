@@ -20,6 +20,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddJwtAuth(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularAppCorsPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -32,7 +42,9 @@ if (app.Environment.IsDevelopment())
         options.WithTheme(ScalarTheme.BluePlanet);
     });
 }
-
+app.UseCors("AngularAppCorsPolicy");
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapAllEndpoints();
 app.Run();

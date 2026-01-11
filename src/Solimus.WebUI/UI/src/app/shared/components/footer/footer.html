@@ -1,0 +1,61 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="10" width="180" height="180" rx="30" class="logo-bg" />
+                        <path class="logo-letter" transform="translate(100 100) skewX(-14) translate(-100 -100)" d="
+                              M 130 46
+                              C 92 26, 44 44, 44 100
+                              C 44 156, 92 174, 130 154
+                              L 122 140
+                              C 94 154, 66 136, 66 100
+                              C 66 64, 94 46, 122 60
+                              Z
+
+                              M 116 72
+                              C 92 60, 72 72, 72 100
+                              C 72 128, 92 140, 116 128
+                              C 98 132, 86 120, 86 100
+                              C 86 80, 98 68, 116 72
+                              Z
+                            " fill-rule="evenodd" />
+                    </svg>
+                    <span class="brand-name">Cyberius</span>
+                </div>
+                <p class="brand-description">
+                    Современная платформа для управления вашими проектами и командой.
+                </p>
+            </div>
+
+            <nav class="footer-links">
+                @for (link of footerLinks; track link.route) {
+                <a [routerLink]="link.route" class="footer-link">
+                    {{ link.label }}
+                </a>
+                }
+            </nav>
+
+            <div class="footer-social">
+                @for (social of socialLinks; track social.url) {
+                <a [href]="social.url" target="_blank" rel="noopener noreferrer" class="social-link"
+                    [attr.aria-label]="social.label">
+                    <tui-icon [icon]="social.icon"></tui-icon>
+                </a>
+                }
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+            <p class="copyright">
+                © {{ currentYear }} Cyberius. Все права защищены.
+            </p>
+            <p class="made-with">
+                Сделано с <span class="heart">❤</span> 13CyberPunk02
+            </p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,17 @@
+<div class="layout" [class.sidebar-collapsed]="sidebarCollapsed()" [class.guest-mode]="!isAuthenticated()">
+    <app-navbar />
+
+    @if (isAuthenticated()) {
+        <app-sidebar />
+    }
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <router-outlet />
+        </div>
+
+        @if (showFooter()) {
+        <app-footer />
+        }
+    </main>
+</div>

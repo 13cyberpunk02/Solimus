@@ -1,0 +1,74 @@
+:host {
+    --navbar-height: 64px;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 72px;
+    --content-bg-light: #f8fafc;
+    --content-bg-dark: #0f172a;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    display: block;
+    min-height: 100vh;
+}
+
+.layout {
+    min-height: 100vh;
+    background: var(--content-bg-light);
+    transition: background var(--transition);
+}
+
+:host-context(.dark) .layout {
+    background: var(--content-bg-dark);
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--navbar-height);
+    min-height: calc(100vh - var(--navbar-height));
+    display: flex;
+    flex-direction: column;
+    transition: margin-left var(--transition);
+}
+
+.layout.sidebar-collapsed .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+@media (max-width: 1023px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .layout.sidebar-collapsed .main-content {
+        margin-left: 0;
+    }
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .content-wrapper {
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .content-wrapper {
+        padding: 2.5rem 3rem;
+    }
+}
+
+.layout.guest-mode .main-content {
+    margin-left: 0;
+}
+
+.layout.guest-mode.sidebar-collapsed .main-content {
+    margin-left: 0;
+}
+
+.layout.guest-mode .content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}

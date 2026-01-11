@@ -1,0 +1,64 @@
+<aside class="sidebar" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+    <div class="sidebar-content">
+        <!-- Navigation Groups -->
+        @for (group of navGroups; track group.title) {
+        <div class="nav-group">
+            @if (group.title && !collapsed()) {
+            <div class="nav-group-title">{{ group.title }}</div>
+            }
+            @if (group.title && collapsed()) {
+            <div class="nav-group-divider"></div>
+            }
+
+            <nav class="nav-list">
+                @for (item of group.items; track item.route) {
+                <a [routerLink]="item.route" routerLinkActive="active" class="nav-item" [class.collapsed]="collapsed()"
+                    [title]="collapsed() ? item.label : ''" (click)="onNavItemClick()">
+                    <div class="nav-item-icon">
+                        <tui-icon [icon]="item.icon"></tui-icon>
+                    </div>
+
+                    @if (!collapsed()) {
+                    <span class="nav-item-label">{{ item.label }}</span>
+
+                    @if (item.badge) {
+                    <span class="nav-item-badge" [class.text-badge]="typeof item.badge === 'string'">
+                        {{ item.badge }}
+                    </span>
+                    }
+                    }
+
+                    @if (collapsed() && item.badge) {
+                    <span class="nav-item-dot"></span>
+                    }
+                </a>
+                }
+            </nav>
+        </div>
+        }
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="sidebar-footer">
+        @if (!collapsed()) {
+        <button class="logout-btn" (click)="logout()">
+            <div class="logout-icon">
+                <tui-icon icon="@tui.log-out"></tui-icon>
+            </div>
+            <div class="logout-content">
+                <div class="logout-title">Выйти</div>
+                <div class="logout-text">{{ currentUser()?.email || 'Выход из аккаунта' }}</div>
+            </div>
+        </button>
+        } @else {
+        <button class="logout-btn-collapsed" (click)="logout()" title="Выйти">
+            <tui-icon icon="@tui.log-out"></tui-icon>
+        </button>
+        }
+    </div>
+</aside>
+
+<!-- Mobile Overlay -->
+@if (mobileOpen()) {
+<div class="sidebar-overlay" (click)="closeMobileMenu()"></div>
+}

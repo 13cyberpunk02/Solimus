@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
 using Solimus.Application.Authentication.DTO_s;
 using Solimus.Application.Common;
 using Solimus.Application.Common.ServiceErrors;
@@ -94,8 +94,13 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
             UserId = newUserToAdd.UserId
         };
         await unitOfWork.UserRoles.AddAsync(userRoleEntityToAdd, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        var accessToken = jwtService.GenerateJwtToken(newUserToAdd);
+        var newUserToAccess = await unitOfWork.Users.GetByEmail(newUserToAdd.Email, cancellationToken);
+        if (newUserToAccess is null)
+            return AuthenticationErrors.InvalidCredentials;
+        
+        var accessToken = jwtService.GenerateJwtToken(newUserToAccess);
         var refreshToken = jwtService.GenerateRefreshToken();
         
         var refreshTokenEntityToAdd = new RefreshToken
@@ -116,7 +121,7 @@ public class AuthenticationService(IUnitOfWork unitOfWork, IJwtService jwtServic
         if (principal is null)
             return AuthenticationErrors.InvalidToken;
 
-        var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userIdClaim = principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
         if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             return AuthenticationErrors.InvalidToken;
 

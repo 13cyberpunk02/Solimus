@@ -9,5 +9,8 @@ public class UserRepository(AppDbContext context) :
     GenericRepository<User>(context), IUserRepository
 {
     public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default) => 
-        await _set.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        await _set
+            .Include(x => x.UserRoles)
+            .ThenInclude(x => x.Role)
+            .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 }

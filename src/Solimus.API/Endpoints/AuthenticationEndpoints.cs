@@ -1,9 +1,11 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Solimus.API.Common.Extensions;
 using Solimus.API.Common.Filters;
 using Solimus.Application.Authentication.DTO_s;
 using Solimus.Application.Authentication.Service;
+using LoginRequest = Solimus.Application.Authentication.DTO_s.LoginRequest;
 
 namespace Solimus.API.Endpoints;
 
@@ -31,11 +33,10 @@ public static class AuthenticationEndpoints
         
         group.MapPost("logout/{userId:guid}", Logout)
             .RequireAuthorization(options =>
-            {
-                options.RequireClaim(ClaimTypes.NameIdentifier);
-            })
+                {
+                    options.RequireClaim(ClaimTypes.NameIdentifier);   
+                })
             .WithSummary("Logout");
-        
         return group;
     }
 
@@ -65,7 +66,9 @@ public static class AuthenticationEndpoints
         HttpContext httpContext,
         CancellationToken cancellationToken = default)
     {
-        var requestUserId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var requestUserId =
+            httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub)
+            ?? httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var response = await service.Logout(Guid.Parse(requestUserId), userId, cancellationToken);
         return response.ToHttpResponse();
     }
