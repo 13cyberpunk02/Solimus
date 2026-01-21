@@ -13,4 +13,10 @@ public class UserRepository(AppDbContext context) :
             .Include(x => x.UserRoles)
             .ThenInclude(x => x.Role)
             .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+
+    public async Task<List<User>?> GetAllUsersWithRoles(CancellationToken cancellationToken = default)
+        => await _set
+            .Include(u => u.UserRoles)
+            .ThenInclude(x => x.Role)
+            .ToListAsync(cancellationToken);
 }

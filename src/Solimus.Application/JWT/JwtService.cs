@@ -20,10 +20,10 @@ public class JwtService(IOptionsMonitor<JwtOption> jwtOptions) : IJwtService
                 new (JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
                 new (JwtRegisteredClaimNames.Email, user.Email),
                 new (JwtRegisteredClaimNames.Name, user.UserName),
-                new ("role", string.Join(", ", user.UserRoles.Select(x => x.Role.RoleName).ToArray())),
                 new(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenLifetimeInMinutes).ToString(CultureInfo.CurrentCulture))
             ];
-
+        claims.AddRange(user.UserRoles.Select(ur => new Claim(ClaimTypes.Role, ur.Role.RoleName)));
+        
         var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.PrivateKey));
         var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha512);
 

@@ -17,6 +17,7 @@ public static class UserEndpoints
             .RequireAuthorization(options =>
             {
                 options.RequireRole("Admin");
+                options.RequireAuthenticatedUser();
             })
             .AddEndpointFilter<RequestLoggingFilter>();
 
@@ -47,6 +48,10 @@ public static class UserEndpoints
         group.MapPut("/{userId:guid}/change-password", ChangePassword)
             .WithRequestValidation<ChangeUserPasswordRequest>()
             .WithSummary("Change password");
+        
+        group.MapPut("/{userId:guid}/assign-role", AssignOrRemoveRole)
+            .WithRequestValidation<AssignOrRemoveRoleRequest>()
+            .WithSummary("Assign or remove role");
         
         return group;
     }
@@ -122,6 +127,16 @@ public static class UserEndpoints
         CancellationToken ct = default)
     {
         var response = await userService.ChangePassword(changeUserPasswordRequest, userId, ct);
+        return response.ToHttpResponse();
+    }
+
+    private static async Task<IResult> AssignOrRemoveRole(
+        IUserService userService,
+        [FromRoute]Guid userId,
+        [FromBody] AssignOrRemoveRoleRequest assignOrRemoveRoleRequest,
+        CancellationToken ct = default)
+    {
+        var response = await userService.AssignOrRemoveRole(userId, assignOrRemoveRoleRequest, ct);
         return response.ToHttpResponse();
     }
 }

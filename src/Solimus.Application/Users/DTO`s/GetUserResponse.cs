@@ -6,6 +6,7 @@ public record GetUserResponse(
     string Email,
     string FirstName,
     string LastName,
+    List<string> RoleNames,
     DateTime JoinedDate,
     DateTime LastUpdate);
     
